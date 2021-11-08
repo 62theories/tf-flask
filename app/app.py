@@ -22,10 +22,10 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'    # Suppress TensorFlow logging (1)
 warnings.filterwarnings('ignore')
 tf.get_logger().setLevel('ERROR')
 
-PATH_TO_MODEL_DIR = 'C:\\work\\flask_demo\\app\\models'
-PATH_TO_LABELS = 'C:\\work\\flask_demo\\app\\label_map.pbtxt'
+PATH_TO_MODEL_DIR = './app/models'
+PATH_TO_LABELS = './app/label_map.pbtxt'
 PATH_TO_SAVED_MODEL = PATH_TO_MODEL_DIR + "/saved_model"
-UPLOAD_FOLDER = 'C:\\work\\flask_demo\\app\\outputs'
+UPLOAD_FOLDER = './app/outputs'
 
 print('Loading model...', end='')
 start_time = time.time()

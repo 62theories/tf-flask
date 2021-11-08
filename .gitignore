@@ -98,3 +98,5 @@ ENV/
 .DS_Store
 
 app/models
+
+.vscode
