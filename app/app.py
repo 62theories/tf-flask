@@ -60,7 +60,7 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 if __name__ == '__main__':
-  app.run(debug = True)
+  app.run()
 
 @app.route("/")
 def hello_world():
