@@ -58,6 +58,9 @@ def load_image_into_numpy_array(path):
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+if __name__ == '__main__':
+  app.run(debug = True)
+
 @app.route("/")
 def hello_world():
     return "<p>Hello, World!</p>"
