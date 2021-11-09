@@ -18,6 +18,7 @@ import base64
 from io import BytesIO
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'    # Suppress TensorFlow logging (1)
+os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
 
 warnings.filterwarnings('ignore')
 tf.get_logger().setLevel('ERROR')
