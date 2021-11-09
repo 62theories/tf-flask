@@ -5,3 +5,6 @@ services:
     ports:
       - "5000:5000"
     restart: always
+    volumes:
+      - ./app/models:/app/models
+    command: python app.py
