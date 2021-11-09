@@ -100,3 +100,5 @@ ENV/
 app/models
 
 .vscode
+
+app/outputs

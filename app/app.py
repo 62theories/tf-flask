@@ -18,7 +18,7 @@ import base64
 from io import BytesIO
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'    # Suppress TensorFlow logging (1)
-os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
+# os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
 
 warnings.filterwarnings('ignore')
 tf.get_logger().setLevel('ERROR')
@@ -42,65 +42,65 @@ category_index = label_map_util.create_category_index_from_labelmap(PATH_TO_LABE
                                                                     use_display_name=True)
 
 def load_image_into_numpy_array(path):
-    """Load an image from file into a numpy array.
+  """Load an image from file into a numpy array.
 
-    Puts image into numpy array to feed into tensorflow graph.
-    Note that by convention we put it into a numpy array with shape
-    (height, width, channels), where channels=3 for RGB.
+  Puts image into numpy array to feed into tensorflow graph.
+  Note that by convention we put it into a numpy array with shape
+  (height, width, channels), where channels=3 for RGB.
 
-    Args:
-      path: the file path to the image
+  Args:
+    path: the file path to the image
 
-    Returns:
-      uint8 numpy array with shape (img_height, img_width, 3)
-    """
-    return np.array(Image.open(path))
+  Returns:
+    uint8 numpy array with shape (img_height, img_width, 3)
+  """
+  return np.array(Image.open(path))
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-if __name__ == '__main__':
-  app.run()
-
 @app.route("/")
 def hello_world():
-    return "<p>Hello, World!</p>"
+  return "<p>Hello, World!</p>"
 
 @app.route("/upload", methods=['POST'])
 def upload_file():
-    if request.method == 'POST':
-        if 'file' not in request.files:
-            flash('No file part')
-            return 'invalid file'
-        file = request.files['file']
-        if file.filename == '':
-            flash('No selected file')
-            return 'invalid file'
-        image_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
-        print('Running inference for {}... '.format(image_path), end='')
-        file.save(image_path)
-        image_np = load_image_into_numpy_array(image_path)
-        input_tensor = tf.convert_to_tensor(image_np)
-        input_tensor = input_tensor[tf.newaxis, ...]
-        detections = detect_fn(input_tensor)
-        num_detections = int(detections.pop('num_detections'))
-        detections = {key: value[0, :num_detections].numpy() 
-            for key, value in detections.items()}
-        detections['num_detections'] = num_detections
-        detections['detection_classes'] = detections['detection_classes'].astype(np.int64)
-        image_np_with_detections = image_np.copy()
-        viz_utils.visualize_boxes_and_labels_on_image_array(
-          image_np_with_detections,
-          detections['detection_boxes'],
-          detections['detection_classes'],
-          detections['detection_scores'],
-          category_index,
-          use_normalized_coordinates=True,
-          max_boxes_to_draw=200,
-          min_score_thresh=.50,
-          agnostic_mode=False)
-        im = Image.fromarray(image_np_with_detections)
-        buffered = BytesIO()
-        im.save(buffered, format="JPEG")
-        image_string = base64.b64encode(buffered.getvalue())
-        return "data:image/jpeg;base64," + image_string.decode('utf-8')
+  if request.method == 'POST':
+      if 'file' not in request.files:
+          flash('No file part')
+          return 'invalid file'
+      file = request.files['file']
+      if file.filename == '':
+          flash('No selected file')
+          return 'invalid file'
+      image_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+      print('Running inference for {}... '.format(image_path), end='')
+      file.save(image_path)
+      image_np = load_image_into_numpy_array(image_path)
+      input_tensor = tf.convert_to_tensor(image_np)
+      input_tensor = input_tensor[tf.newaxis, ...]
+      detections = detect_fn(input_tensor)
+      num_detections = int(detections.pop('num_detections'))
+      detections = {key: value[0, :num_detections].numpy() 
+          for key, value in detections.items()}
+      detections['num_detections'] = num_detections
+      detections['detection_classes'] = detections['detection_classes'].astype(np.int64)
+      image_np_with_detections = image_np.copy()
+      viz_utils.visualize_boxes_and_labels_on_image_array(
+        image_np_with_detections,
+        detections['detection_boxes'],
+        detections['detection_classes'],
+        detections['detection_scores'],
+        category_index,
+        use_normalized_coordinates=True,
+        max_boxes_to_draw=200,
+        min_score_thresh=.50,
+        agnostic_mode=False)
+      im = Image.fromarray(image_np_with_detections)
+      buffered = BytesIO()
+      im.save(buffered, format="JPEG")
+      image_string = base64.b64encode(buffered.getvalue())
+      return "data:image/jpeg;base64," + image_string.decode('utf-8')
+
+if __name__ == '__main__':
+  app.run(host='0.0.0.0')
