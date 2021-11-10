@@ -105,4 +105,4 @@ def upload_file():
     return "data:image/jpeg;base64," + image_string.decode('utf-8')
 
 if __name__ == '__main__':
-  app.run(host='0.0.0.0', debug=True)
+  app.run(host='0.0.0.0', debug=False)
