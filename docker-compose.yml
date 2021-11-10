@@ -7,6 +7,6 @@ services:
     restart: always
     volumes:
       - ./app:/app
-    command: python -u app.py
+    command: uwsgi --socket 0.0.0.0:5000 --protocol=http -w wsgi:app
     environment:
       - PYTHONUNBUFFERED=1
