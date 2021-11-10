@@ -98,6 +98,7 @@ ENV/
 .DS_Store
 
 app/models
+app/label_map.pbtxt
 
 .vscode
 
