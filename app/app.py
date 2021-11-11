@@ -16,6 +16,9 @@ import matplotlib.pyplot as plt
 import warnings
 import base64
 from io import BytesIO
+from flask.ext.session import Session
+
+SESSION_TYPE = 'memcache'
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'    # Suppress TensorFlow logging (1)
 # os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
@@ -59,7 +62,7 @@ def load_image_into_numpy_array(path):
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.secret_key = "super secret key"
-sess = session()
+sess = Session()
 
 @app.route("/")
 def hello_world():
