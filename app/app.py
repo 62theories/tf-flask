@@ -59,7 +59,7 @@ def load_image_into_numpy_array(path):
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.secret_key = "super secret key"
-sess = Session()
+sess = session()
 
 @app.route("/")
 def hello_world():
