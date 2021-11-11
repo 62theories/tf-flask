@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 import warnings
 import base64
 from io import BytesIO
-from flask.ext.session import Session
+from flask_session import Session
 
 SESSION_TYPE = 'memcache'
 
