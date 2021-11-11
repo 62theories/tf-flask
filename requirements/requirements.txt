@@ -1,4 +1,4 @@
 sklearn==0.0
 Flask==1.1.2
-flask_session==0.3.2
+flask-session==0.3.2
 uwsgi==2.0.19
