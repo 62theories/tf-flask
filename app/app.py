@@ -1,4 +1,4 @@
-from flask import Flask, flash, request, redirect, url_for
+from flask import Flask, flash, request, redirect, url_for,session
 import struct
 import glob
 import os
@@ -58,6 +58,8 @@ def load_image_into_numpy_array(path):
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.secret_key = "super secret key"
+sess = Session()
 
 @app.route("/")
 def hello_world():
@@ -106,3 +108,4 @@ def upload_file():
 
 if __name__ == '__main__':
   app.run(host='0.0.0.0', debug=False)
+  sess.init_app(app)
