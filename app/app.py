@@ -76,9 +76,9 @@ def upload_file():
         flash('No file part')
         return 'invalid file'
     file = request.files['file']
-    if file.filename == '':
-        flash('No selected file')
-        return 'invalid file'
+    # if file.filename == '':
+    #     flash('No selected file')
+    #     return 'invalid file'
     image_path = os.path.join(app.config['UPLOAD_FOLDER'], '{}'.format(time.time()))
     print('Running inference for {}... '.format(image_path), end='')
     file.save(image_path)
