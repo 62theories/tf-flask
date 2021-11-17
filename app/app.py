@@ -61,6 +61,7 @@ def load_image_into_numpy_array(path):
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024
 app.secret_key = "super secret key"
 sess = Session()
 
