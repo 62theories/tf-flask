@@ -110,7 +110,7 @@ def upload_file():
     # im.save(buffered, format="JPEG")
     # image_string = base64.b64encode(buffered.getvalue())
     # return "data:image/jpeg;base64," + image_string.decode('utf-8')
-    return 200
+    return "test"
 
 if __name__ == '__main__':
   app.run(host='0.0.0.0', debug=False)
