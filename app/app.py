@@ -72,6 +72,7 @@ def hello_world():
 @app.route("/upload", methods=['POST'])
 def upload_file():
   if request.method == 'POST':
+    print(request.data)
     print(request.files)
     if 'file' not in request.files:
         flash('No file part')
